@@ -1,30 +1,13 @@
-plugins {
-    id("com.android.library")
-    alias(libs.plugins.kotlin.android)
-}
+apply<AndroidLibraryPlugin>()
 
 android {
-    namespace = "cz.kuhnt.moneta.assignment.library.design"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = version("composeCompiler")
     }
 }
-
 
 dependencies {
     implementation(libs.androidx.material3)
