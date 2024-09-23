@@ -1,6 +1,8 @@
 package cz.kuhnt.moneta.assignment.presentation
 
-import androidx.lifecycle.ViewModel
+import cz.kuhnt.moneta.assignment.library.mvvm.presentation.AbstractViewModel
 
+internal class MainViewModel : AbstractViewModel<MainViewModel.State>(State()) {
 
-internal class MainViewModel : ViewModel()
+    data class State(val placeholder: String = "") : AbstractViewModel.State
+}

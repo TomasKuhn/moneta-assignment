@@ -29,3 +29,5 @@ rootProject.name = "MonetaAssignment"
 include(":app")
 include(":feature:players")
 include(":library:design")
+include(":library:mvvm")
+include(":library:use-case")
