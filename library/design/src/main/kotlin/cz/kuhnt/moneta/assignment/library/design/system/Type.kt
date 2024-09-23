@@ -1,4 +1,4 @@
-package cz.kuhnt.moneta.assignment.system
+package cz.kuhnt.moneta.assignment.library.design.system
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package cz.kuhnt.moneta.assignment.system
+package cz.kuhnt.moneta.assignment.library.design.system
 
 import androidx.compose.ui.graphics.Color
 
