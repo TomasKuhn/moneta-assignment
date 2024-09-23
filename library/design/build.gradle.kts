@@ -1,13 +1,5 @@
 apply<AndroidLibraryPlugin>()
-
-android {
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = version("composeCompiler")
-    }
-}
+apply<ComposePlugin>()
 
 dependencies {
     implementation(libs.androidx.material3)

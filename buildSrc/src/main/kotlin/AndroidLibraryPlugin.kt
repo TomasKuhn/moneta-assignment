@@ -1,6 +1,7 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.dependencies
 
 class AndroidLibraryPlugin : Plugin<Project> by local plugin {
     apply(plugin = "com.android.library")
@@ -14,9 +15,9 @@ class AndroidLibraryPlugin : Plugin<Project> by local plugin {
         defaultConfig {
             minSdk = ProjectConfiguration.Sdk.min
         }
-
-        buildFeatures {
-            buildConfig = true
-        }
+    }
+    
+    dependencies { 
+        implementation(libs.dependency("koin"))
     }
 }

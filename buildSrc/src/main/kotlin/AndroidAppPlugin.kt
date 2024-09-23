@@ -6,6 +6,7 @@ class AndroidAppPlugin : Plugin<Project> by local plugin {
     apply(plugin = "com.android.application")
     apply(plugin = "kotlin-android")
     apply<CompilersPlugin>()
+    apply<ComposePlugin>()
 
     androidApplication {
         compileSdk = ProjectConfiguration.Sdk.compile
@@ -29,13 +30,6 @@ class AndroidAppPlugin : Plugin<Project> by local plugin {
                     "proguard-rules.pro"
                 )
             }
-        }
-
-        buildFeatures {
-            compose = true
-        }
-        composeOptions {
-            kotlinCompilerExtensionVersion = version("composeCompiler")
         }
     }
 }

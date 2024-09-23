@@ -27,4 +27,5 @@ dependencyResolutionManagement {
 rootProject.name = "MonetaAssignment"
 
 include(":app")
+include(":feature:players")
 include(":library:design")
