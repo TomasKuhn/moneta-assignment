@@ -33,6 +33,10 @@ internal class PlayersViewModel(
             )
         }
     }
+    
+    fun onErrorDismiss() {
+        state = state.copy(error = null)
+    }
 
     data class State(
         val isLoading: Boolean = false,

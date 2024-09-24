@@ -63,6 +63,17 @@ internal class PlayersViewModelTest: AbstractTest() {
         viewModel.states.value.playerNames shouldBe names
     }
 
+    @Test
+    fun `should clear error when error dialog dismissed`() {
+        val viewModel = viewModel(
+            fetchPlayersUseCase = mockk { returnsFlow(Data.Error(Throwable("Something went wrong"))) }
+        )
+        
+        viewModel.onErrorDismiss()
+
+        viewModel.states.value.error shouldBe null
+    }
+
     private fun viewModel(
         fetchPlayersUseCase: FetchPlayersUseCase = mockk(relaxed = true)
     ) = PlayersViewModel(

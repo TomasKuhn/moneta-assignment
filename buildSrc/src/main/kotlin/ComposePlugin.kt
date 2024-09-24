@@ -24,5 +24,7 @@ class ComposePlugin : Plugin<Project> by local plugin {
         implementation(libs.dependency("androidx.ui.graphics"))
         implementation(libs.dependency("androidx.ui.tooling.preview"))
         implementation(libs.dependency("androidx.material3"))
+
+        debugImplementation(libs.dependency("androidx.ui.tooling"))
     }
 }

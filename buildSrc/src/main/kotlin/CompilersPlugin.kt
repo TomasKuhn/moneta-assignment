@@ -13,6 +13,7 @@ internal class CompilersPlugin : Plugin<Project> by local plugin {
         kotlinOptions {
             freeCompilerArgs = listOf(
                 "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                 "-opt-in=kotlinx.coroutines.FlowPreview"
             )
         }

@@ -12,3 +12,14 @@ style:
     excludePackageStatements: true
     excludeImportStatements: true
     excludeCommentStatements: true
+  UnusedPrivateMember:
+    active: true
+    allowedNames: '(serialVersionUID)'
+    ignoreAnnotated: [ '*Preview' ]
+naming:
+  active: true
+  FunctionNaming:
+    active: true
+    functionPattern: '([a-z][a-zA-Z0-9]*)|(`.*`)'
+    ignoreOverridden: true
+    ignoreAnnotated: [ 'Composable' ]

@@ -3,6 +3,7 @@ apply<AndroidAppPlugin>()
 dependencies {
     implementation(projects.feature.players)
     implementation(projects.library.design)
+    implementation(projects.library.localization)
     implementation(projects.library.mvvm)
     implementation(projects.library.networking)
 
