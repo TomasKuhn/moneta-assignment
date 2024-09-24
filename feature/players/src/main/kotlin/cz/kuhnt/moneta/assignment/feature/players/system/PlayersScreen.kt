@@ -1,10 +1,13 @@
 package cz.kuhnt.moneta.assignment.feature.players.system
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
@@ -12,7 +15,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,6 +30,7 @@ import cz.kuhnt.moneta.assignment.feature.players.presentation.PlayersViewModel
 import cz.kuhnt.moneta.assignment.library.design.system.Dimensions
 import cz.kuhnt.moneta.assignment.library.design.system.ErrorDialog
 import cz.kuhnt.moneta.assignment.library.design.system.MonetaTheme
+import cz.kuhnt.moneta.assignment.library.design.system.MonetaTopAppBar
 import cz.kuhnt.moneta.assignment.library.design.system.Typography
 import cz.kuhnt.moneta.assignment.localization.R
 import org.koin.androidx.compose.koinViewModel
@@ -39,6 +42,7 @@ fun PlayersScreen() {
 
     Content(
         state = state,
+        onPlayerDetail = viewModel::onPlayerDetail,
         onLoadNextPage = viewModel::onFetchPlayers,
         onErrorDismiss = viewModel::onErrorDismiss
     )
@@ -48,13 +52,12 @@ fun PlayersScreen() {
 private fun Content(
     state: PlayersViewModel.State,
     onLoadNextPage: () -> Unit,
+    onPlayerDetail: (Player) -> Unit,
     onErrorDismiss: () -> Unit,
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.players_title)) }
-            )
+            MonetaTopAppBar(title = stringResource(R.string.players_title))
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
@@ -67,7 +70,8 @@ private fun Content(
             Players(
                 modifier = Modifier.padding(innerPadding),
                 state = state,
-                onLoadNextPage = onLoadNextPage
+                onLoadNextPage = onLoadNextPage,
+                onPlayerDetail = onPlayerDetail
             )
         }
     }
@@ -90,17 +94,14 @@ private fun Players(
     modifier: Modifier,
     state: PlayersViewModel.State,
     onLoadNextPage: () -> Unit,
+    onPlayerDetail: (Player) -> Unit,
 ) {
     val listState = rememberLazyListState()
 
-    LaunchedEffect(key1 = listState) {
-        snapshotFlow { listState.layoutInfo }
-            .collect { layoutInfo ->
-                if (layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1) {
-                    onLoadNextPage()
-                }
-            }
-    }
+    PagingEffect(
+        listState = listState,
+        onLoadNextPage = onLoadNextPage
+    )
 
     LazyColumn(
         state = listState,
@@ -108,10 +109,13 @@ private fun Players(
     ) {
         items(state.players) { player ->
             Column(
-                modifier = Modifier.padding(
-                    horizontal = Dimensions.paddingM,
-                    vertical = Dimensions.paddingS,
-                )
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onPlayerDetail(player) }
+                    .padding(
+                        horizontal = Dimensions.paddingM,
+                        vertical = Dimensions.paddingS,
+                    )
             ) {
                 Text(
                     text = player.name,
@@ -128,6 +132,18 @@ private fun Players(
                 Loading()
             }
         }
+    }
+}
+
+@Composable
+private fun PagingEffect(listState: LazyListState, onLoadNextPage: () -> Unit) {
+    LaunchedEffect(key1 = listState) {
+        snapshotFlow { listState.layoutInfo }
+            .collect { layoutInfo ->
+                if (layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1) {
+                    onLoadNextPage()
+                }
+            }
     }
 }
 
@@ -150,10 +166,20 @@ private fun PlayersScreenPreview() = MonetaTheme {
     Content(
         state = PlayersViewModel.State(
             players = listOf(
-                Player("Stephen Curry", "G1", Team("Warriors"))
+                Player(
+                    id = 1,
+                    name = "Stephen Curry",
+                    position = "G1",
+                    height = "185",
+                    weight = "6-2",
+                    college = "Davidson College",
+                    country = "USA",
+                    team = Team("Warriors")
+                )
             )
         ),
         onLoadNextPage = {},
+        onPlayerDetail = {},
         onErrorDismiss = {}
     )
 }
@@ -166,6 +192,7 @@ private fun PlayersScreenLoadingPreview() = MonetaTheme {
             isLoading = true
         ),
         onLoadNextPage = {},
+        onPlayerDetail = {},
         onErrorDismiss = {}
     )
 }
@@ -178,6 +205,7 @@ private fun PlayersScreenErrorPreview() = MonetaTheme {
             error = "Something went wrong"
         ),
         onLoadNextPage = {},
+        onPlayerDetail = {},
         onErrorDismiss = {}
     )
 }

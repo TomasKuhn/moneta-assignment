@@ -6,6 +6,7 @@ dependencies {
     implementation(projects.library.localization)
     implementation(projects.library.mvvm)
     implementation(projects.library.networking)
+    implementation(projects.library.useCase)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

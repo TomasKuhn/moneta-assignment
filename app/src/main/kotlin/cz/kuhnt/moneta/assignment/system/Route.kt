@@ -1,7 +1,8 @@
 package cz.kuhnt.moneta.assignment.system
 
 internal enum class Route {
-    Players;
+    Players,
+    PlayerDetail;
 
     operator fun invoke() = name.lowercase()
 

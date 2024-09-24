@@ -3,6 +3,7 @@ package cz.kuhnt.moneta.assignment.feature.players.presentation
 import androidx.lifecycle.viewModelScope
 import cz.kuhnt.moneta.assignment.feature.players.domain.FetchPlayersUseCase
 import cz.kuhnt.moneta.assignment.feature.players.domain.ObservePlayersUseCase
+import cz.kuhnt.moneta.assignment.feature.players.domain.OpenPlayerDetailUseCase
 import cz.kuhnt.moneta.assignment.feature.players.model.Player
 import cz.kuhnt.moneta.assignment.library.mvvm.presentation.AbstractViewModel
 import cz.kuhnt.moneta.assignment.library.networking.data.Data
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 internal class PlayersViewModel(
     private val fetchPlayers: FetchPlayersUseCase,
     private val observePlayers: ObservePlayersUseCase,
+    private val openPlayerDetail: OpenPlayerDetailUseCase
 ) : AbstractViewModel<PlayersViewModel.State>(State()) {
 
     init {
@@ -45,6 +47,10 @@ internal class PlayersViewModel(
 
     fun onErrorDismiss() {
         state = state.copy(error = null)
+    }
+    
+    fun onPlayerDetail(player: Player) {
+        openPlayerDetail(player)
     }
 
     data class State(

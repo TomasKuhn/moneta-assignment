@@ -7,15 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 
 //TODO KDoc
-internal class ObservePlayersUseCase(
-    private val localPlayersRepository: LocalPlayersRepository
-) : SynchronousUseCase<Unit, Flow<List<Player>>> {
-
-    override fun invoke(input: Unit): Flow<List<Player>> {
-        return localPlayersRepository.observePlayers()
-    }
-}
-
 internal class FetchPlayersUseCase(
     private val localPlayersRepository: LocalPlayersRepository,
     private val remotePlayersRepository: RemotePlayersRepository

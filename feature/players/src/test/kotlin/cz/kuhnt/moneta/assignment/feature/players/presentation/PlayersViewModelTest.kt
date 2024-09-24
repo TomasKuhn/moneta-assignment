@@ -2,6 +2,7 @@ package cz.kuhnt.moneta.assignment.feature.players.presentation
 
 import cz.kuhnt.moneta.assignment.feature.players.domain.FetchPlayersUseCase
 import cz.kuhnt.moneta.assignment.feature.players.domain.ObservePlayersUseCase
+import cz.kuhnt.moneta.assignment.feature.players.domain.OpenPlayerDetailUseCase
 import cz.kuhnt.moneta.assignment.feature.players.model.Player
 import cz.kuhnt.moneta.assignment.library.networking.data.Data
 import cz.kuhnt.moneta.assignment.library.test.domain.returnsFlow
@@ -14,7 +15,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
 
-internal class PlayersViewModelTest: AbstractTest() {
+internal class PlayersViewModelTest : AbstractTest() {
 
     @Test
     fun `should correctly set state after creation`() {
@@ -55,7 +56,7 @@ internal class PlayersViewModelTest: AbstractTest() {
         val viewModel = viewModel(
             fetchPlayers = mockk { returnsFlow(Data.Loading) }
         )
-        
+
         viewModel.states.value.isLoading shouldBe true
     }
 
@@ -64,7 +65,7 @@ internal class PlayersViewModelTest: AbstractTest() {
         val viewModel = viewModel(
             fetchPlayers = mockk { returnsFlow(Data.Loading, Data.Error(Throwable())) }
         )
-        
+
         viewModel.states.value.isLoading shouldBe false
     }
 
@@ -83,17 +84,32 @@ internal class PlayersViewModelTest: AbstractTest() {
         val viewModel = viewModel(
             fetchPlayers = mockk { returnsFlow(Data.Error(Throwable("Something went wrong"))) }
         )
-        
+
         viewModel.onErrorDismiss()
 
         viewModel.states.value.error shouldBe null
     }
 
+    @Test
+    fun `should open player detail when opening player detail`() {
+        val player = mockk<Player>()
+        val openPlayerDetail: OpenPlayerDetailUseCase = mockk(relaxUnitFun = true)
+        val viewModel = viewModel(
+            openPlayerDetail = openPlayerDetail
+        )
+
+        viewModel.onPlayerDetail(player)
+
+        verify { openPlayerDetail(player) }
+    }
+
     private fun viewModel(
         fetchPlayers: FetchPlayersUseCase = mockk(relaxed = true),
         observePlayers: ObservePlayersUseCase = mockk(relaxed = true),
+        openPlayerDetail: OpenPlayerDetailUseCase = mockk(relaxed = true)
     ) = PlayersViewModel(
         fetchPlayers = fetchPlayers,
-        observePlayers = observePlayers
+        observePlayers = observePlayers,
+        openPlayerDetail = openPlayerDetail
     )
 }

@@ -7,4 +7,8 @@
     <string name="players_title">Players</string>
     <string name="players_position">Position</string>
     <string name="players_team">Team</string>
+    <string name="players_height">Height</string>
+    <string name="players_weight">Weight</string>
+    <string name="players_college">College</string>
+    <string name="players_country">Country</string>
 </resources>

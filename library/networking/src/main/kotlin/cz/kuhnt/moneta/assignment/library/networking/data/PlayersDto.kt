@@ -11,13 +11,21 @@ data class PlayersDto(
 
 data class PlayerDto(
     @SerializedName("id")
-    val id: String,
+    val id: Long,
     @SerializedName("first_name")
     val firstName: String,
     @SerializedName("last_name")
     val lastName: String,
     @SerializedName("position")
     val position: String,
+    @SerializedName("height")
+    val height: String,
+    @SerializedName("weight")
+    val weight : String,
+    @SerializedName("college")
+    val college: String,
+    @SerializedName("country")
+    val country: String,
     @SerializedName("team")
     val team: TeamDto,
 )

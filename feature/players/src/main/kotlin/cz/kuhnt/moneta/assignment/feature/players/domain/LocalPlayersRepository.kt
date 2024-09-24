@@ -7,4 +7,6 @@ interface LocalPlayersRepository {
     val cursor: Int
     fun observePlayers() : Flow<List<Player>>
     fun setPlayers(players: List<Player>, cursor: Int)
+    fun observePlayerDetail(): Flow<Player?>
+    fun setPlayerDetailId(id: Long?)
 }
