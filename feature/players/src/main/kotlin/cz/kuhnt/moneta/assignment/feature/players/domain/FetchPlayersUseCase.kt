@@ -6,7 +6,9 @@ import cz.kuhnt.moneta.assignment.library.usecase.domain.SynchronousUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 
-//TODO KDoc
+/**
+ * Fetches players from the remote repository and stores them in the local repository.
+ */
 internal class FetchPlayersUseCase(
     private val localPlayersRepository: LocalPlayersRepository,
     private val remotePlayersRepository: RemotePlayersRepository

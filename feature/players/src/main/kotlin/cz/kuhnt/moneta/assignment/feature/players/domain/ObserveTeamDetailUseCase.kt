@@ -4,7 +4,9 @@ import cz.kuhnt.moneta.assignment.feature.players.model.Team
 import cz.kuhnt.moneta.assignment.library.usecase.domain.SynchronousUseCase
 import kotlinx.coroutines.flow.Flow
 
-//TODO KDoc
+/**
+ * Observes the team detail from the local repository.
+ */
 internal class ObserveTeamDetailUseCase(
     private val localTeamsRepository: LocalTeamsRepository
 ) : SynchronousUseCase<Unit, Flow<Team?>> {

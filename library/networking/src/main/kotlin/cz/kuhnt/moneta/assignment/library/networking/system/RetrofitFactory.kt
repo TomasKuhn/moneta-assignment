@@ -8,7 +8,7 @@ internal object RetrofitFactory {
     private const val BASE_URL = "https://api.balldontlie.io/"
 
     fun createRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL) // Note: This is only placeholder URL which is replaced by [EnvironmentInterceptor]
+        .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 }
