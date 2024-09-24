@@ -19,15 +19,24 @@ internal class PlayersViewModel(
     }
 
     private fun onPlayersData(data: Data<List<Player>>) {
-        when (data) {
-            is Data.Error -> TODO("Implement error")
-            Data.Loading -> TODO("Implement loading")
-            is Data.Success -> TODO("Implement success")
+        state = when (data) {
+            Data.Loading -> state.copy(isLoading = true)
+            is Data.Error -> state.copy(
+                isLoading = false,
+                error = data.exception.message
+            )
+
+            is Data.Success -> state.copy(
+                isLoading = false,
+                error = null,
+                playerNames = data.value.map { it.name },
+            )
         }
     }
 
     data class State(
         val isLoading: Boolean = false,
-        val playerNames: List<String> = emptyList()
+        val playerNames: List<String> = emptyList(),
+        val error: String? = null,
     ) : AbstractViewModel.State
 }

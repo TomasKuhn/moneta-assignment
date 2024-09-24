@@ -1,0 +1,14 @@
+build:
+  maxIssues: 0
+
+complexity:
+  TooManyFunctions:
+    thresholdInFiles: 20
+
+style:
+  MaxLineLength:
+    active: true
+    maxLineLength: 140
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludeCommentStatements: true

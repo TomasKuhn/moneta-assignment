@@ -1,6 +1,6 @@
 apply<AndroidLibraryPlugin>()
 
-dependencies { 
+dependencies {
     api(libs.retrofit.retrofit)
     implementation(libs.retrofit.converter.gson)
 }

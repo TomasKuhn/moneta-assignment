@@ -31,5 +31,9 @@ class AndroidAppPlugin : Plugin<Project> by local plugin {
                 )
             }
         }
+
+        packaging {
+            resources.excludes += "**/*.md"
+        }
     }
 }
