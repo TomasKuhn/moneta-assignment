@@ -57,7 +57,7 @@ private fun Content(
 ) {
     Scaffold(
         topBar = {
-            MonetaTopAppBar(title = stringResource(R.string.players_title))
+            MonetaTopAppBar(title = stringResource(R.string.player_title))
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
@@ -105,7 +105,7 @@ private fun Players(
 
     LazyColumn(
         state = listState,
-        modifier = modifier
+        modifier = modifier,
     ) {
         items(state.players) { player ->
             Column(
@@ -174,7 +174,15 @@ private fun PlayersScreenPreview() = MonetaTheme {
                     weight = "6-2",
                     college = "Davidson College",
                     country = "USA",
-                    team = Team("Warriors")
+                    team = Team(
+                        id = 1,
+                        name = "Warriors",
+                        conference = "East",
+                        division = "Pacific",
+                        city = "Oakland",
+                        fullName = "Oakland Warriors",
+                        abbreviation = "OKC"
+                    )
                 )
             )
         ),

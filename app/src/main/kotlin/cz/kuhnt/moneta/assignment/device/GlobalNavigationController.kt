@@ -18,6 +18,7 @@ internal class GlobalNavigationController
     override fun goBack() = goTo(NavigationEvent.BackEvent)
 
     override fun goToPlayerDetail() = goTo(NavigationEvent.ForwardEvent(Route.PlayerDetail))
+    override fun goToTeamDetail() = goTo(NavigationEvent.ForwardEvent(Route.TeamDetail))
 
     private fun goTo(navigationEvent: NavigationEvent) {
         _navigationEvent.tryEmit(navigationEvent)

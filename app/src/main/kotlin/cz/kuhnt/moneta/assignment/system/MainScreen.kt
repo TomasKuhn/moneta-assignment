@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import cz.kuhnt.moneta.assignment.feature.players.system.PlayerDetailScreen
 import cz.kuhnt.moneta.assignment.feature.players.system.PlayersScreen
+import cz.kuhnt.moneta.assignment.feature.players.system.TeamDetailScreen
 import cz.kuhnt.moneta.assignment.model.NavigationEvent
 import cz.kuhnt.moneta.assignment.presentation.MainViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -47,6 +48,7 @@ fun MainNavHost(navController: NavHostController) {
     ) {
         composable(Route.Players()) { PlayersScreen() }
         composable(Route.PlayerDetail()) { PlayerDetailScreen() }
+        composable(Route.TeamDetail()) { TeamDetailScreen() }
     }
 }
 
