@@ -11,7 +11,5 @@ dependencies {
     implementation(libs.androidx.navigation)
     implementation(libs.koin)
 
-    testImplementation(libs.junit)
-
     debugImplementation(libs.androidx.ui.tooling)
 }

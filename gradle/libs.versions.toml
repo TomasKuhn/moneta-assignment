@@ -30,11 +30,22 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 koin = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 
+kotest = "io.kotest:kotest-assertions-core-jvm:5.8.0"
+
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlin-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
+mockk = "io.mockk:mockk:1.13.8"
 
 retrofit-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
-[plugins]
+[bundles]
+test = [
+    "junit",
+    "kotest",
+    "kotlin-coroutines-test",
+    "mockk"
+]
 
