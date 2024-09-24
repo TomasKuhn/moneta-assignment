@@ -16,6 +16,10 @@ data class PlayerDto(
     val firstName: String,
     @SerializedName("last_name")
     val lastName: String,
+    @SerializedName("position")
+    val position: String,
+    @SerializedName("team")
+    val team: TeamDto,
 )
 
 data class PagingMetaDto(

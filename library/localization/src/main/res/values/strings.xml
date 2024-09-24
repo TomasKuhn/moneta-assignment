@@ -5,4 +5,6 @@
     <string name="common_ok">OK</string>
     
     <string name="players_title">Players</string>
+    <string name="players_position">Position</string>
+    <string name="players_team">Team</string>
 </resources>

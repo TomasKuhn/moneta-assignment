@@ -29,7 +29,7 @@ internal class PlayersViewModel(
             is Data.Success -> state.copy(
                 isLoading = false,
                 error = null,
-                playerNames = data.value.map { it.name },
+                players = data.value,
             )
         }
     }
@@ -40,7 +40,7 @@ internal class PlayersViewModel(
 
     data class State(
         val isLoading: Boolean = false,
-        val playerNames: List<String> = emptyList(),
+        val players: List<Player> = emptyList(),
         val error: String? = null,
     ) : AbstractViewModel.State
 }

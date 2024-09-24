@@ -1,11 +1,14 @@
 package cz.kuhnt.moneta.assignment.feature.players.system
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -16,9 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import cz.kuhnt.moneta.assignment.feature.players.model.Player
+import cz.kuhnt.moneta.assignment.feature.players.model.Team
 import cz.kuhnt.moneta.assignment.feature.players.presentation.PlayersViewModel
+import cz.kuhnt.moneta.assignment.library.design.system.Dimensions
 import cz.kuhnt.moneta.assignment.library.design.system.ErrorDialog
 import cz.kuhnt.moneta.assignment.library.design.system.MonetaTheme
+import cz.kuhnt.moneta.assignment.library.design.system.Typography
 import cz.kuhnt.moneta.assignment.localization.R
 import org.koin.androidx.compose.koinViewModel
 
@@ -89,8 +96,22 @@ private fun Players(
     state: PlayersViewModel.State
 ) {
     LazyColumn(modifier = modifier) {
-        items(state.playerNames) { name ->
-            Text(text = name)
+        items(state.players) { player ->
+            Column(
+                modifier = Modifier.padding(
+                    horizontal = Dimensions.paddingM,
+                    vertical = Dimensions.paddingS,
+                )
+            ) {
+                Text(
+                    text = player.name,
+                    style = Typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(text = player.position)
+                Text(text = player.team.name)
+            }
+            HorizontalDivider(modifier = Modifier.padding(horizontal = Dimensions.paddingM))
         }
     }
 }
@@ -100,7 +121,9 @@ private fun Players(
 private fun PlayersScreenPreview() = MonetaTheme {
     Content(
         state = PlayersViewModel.State(
-            playerNames = listOf("Player 1", "Player 2", "Player 3")
+            players = listOf(
+                Player("Stephen Curry", "G1", Team("Warriors"))
+            )
         ),
         onErrorDismiss = {}
     )
