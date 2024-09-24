@@ -9,3 +9,4 @@ interface SynchronousUseCase<in I, out O> : UseCase<I, O> {
 interface SuspendUseCase<in I, out O> : UseCase<I, O> {
     suspend operator fun invoke(input: I): O
 }
+

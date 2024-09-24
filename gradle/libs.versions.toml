@@ -9,6 +9,7 @@ junit = "4.13.2"
 koin = "4.0.0"
 kotlin = "1.9.0"
 lifecycleRuntimeKtx = "2.8.6"
+retrofit = "2.11.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -32,7 +33,8 @@ koin = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 
-retrofit = "com.squareup.retrofit2:retrofit:2.11.0"
+retrofit-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
 [plugins]
 
