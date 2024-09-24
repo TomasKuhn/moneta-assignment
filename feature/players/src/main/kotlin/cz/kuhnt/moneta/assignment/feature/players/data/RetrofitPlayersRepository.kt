@@ -12,10 +12,14 @@ internal class RetrofitPlayersRepository(
     private val api: PlayersApi
 ) : RemotePlayersRepository {
 
-    override fun fetchPlayers(): Flow<Data<List<Player>>> {
+    override fun fetchPlayers(cursor: Int): Flow<Data<List<Player>>> {
         return apiHandler.request(
-            callApi = { api.getPlayers(0, 30) },
+            callApi = { api.getPlayers(cursor, PLAYERS_PER_PAGE) },
             parseDto = { players.map { it.toModel() } }
         )
+    }
+
+    companion object {
+        private const val PLAYERS_PER_PAGE = 35
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -13,8 +14,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,6 +39,7 @@ fun PlayersScreen() {
 
     Content(
         state = state,
+        onLoadNextPage = viewModel::onFetchPlayers,
         onErrorDismiss = viewModel::onErrorDismiss
     )
 }
@@ -43,6 +47,7 @@ fun PlayersScreen() {
 @Composable
 private fun Content(
     state: PlayersViewModel.State,
+    onLoadNextPage: () -> Unit,
     onErrorDismiss: () -> Unit,
 ) {
     Scaffold(
@@ -53,28 +58,18 @@ private fun Content(
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        if (state.isLoading) {
-            Loading()
-        } else if (state.error != null) {
+        if (state.error != null) {
             Error(
                 errorMessage = state.error,
                 onDismiss = onErrorDismiss
             )
         } else {
             Players(
+                modifier = Modifier.padding(innerPadding),
                 state = state,
-                modifier = Modifier.padding(innerPadding)
+                onLoadNextPage = onLoadNextPage
             )
         }
-    }
-}
-
-@Composable
-private fun Loading() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center)
-        )
     }
 }
 
@@ -93,9 +88,24 @@ private fun Error(
 @Composable
 private fun Players(
     modifier: Modifier,
-    state: PlayersViewModel.State
+    state: PlayersViewModel.State,
+    onLoadNextPage: () -> Unit,
 ) {
-    LazyColumn(modifier = modifier) {
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(key1 = listState) {
+        snapshotFlow { listState.layoutInfo }
+            .collect { layoutInfo ->
+                if (layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1) {
+                    onLoadNextPage()
+                }
+            }
+    }
+
+    LazyColumn(
+        state = listState,
+        modifier = modifier
+    ) {
         items(state.players) { player ->
             Column(
                 modifier = Modifier.padding(
@@ -113,6 +123,24 @@ private fun Players(
             }
             HorizontalDivider(modifier = Modifier.padding(horizontal = Dimensions.paddingM))
         }
+        item {
+            if (state.isLoading) {
+                Loading()
+            }
+        }
+    }
+}
+
+@Composable
+private fun Loading() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(Dimensions.paddingM)
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }
 
@@ -125,6 +153,7 @@ private fun PlayersScreenPreview() = MonetaTheme {
                 Player("Stephen Curry", "G1", Team("Warriors"))
             )
         ),
+        onLoadNextPage = {},
         onErrorDismiss = {}
     )
 }
@@ -136,6 +165,7 @@ private fun PlayersScreenLoadingPreview() = MonetaTheme {
         state = PlayersViewModel.State(
             isLoading = true
         ),
+        onLoadNextPage = {},
         onErrorDismiss = {}
     )
 }
@@ -147,6 +177,7 @@ private fun PlayersScreenErrorPreview() = MonetaTheme {
         state = PlayersViewModel.State(
             error = "Something went wrong"
         ),
+        onLoadNextPage = {},
         onErrorDismiss = {}
     )
 }
